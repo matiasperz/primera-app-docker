@@ -1,0 +1,20 @@
+#Extiende de la imagen de node 12.16.1 (Esta imagen se encuentra en DockerHub)
+FROM node:12.16.1-alpine
+
+#El ultimo parametro es el directorio destino del resto de los parametros
+COPY ["package.json", "package-lock.json", "/usr/src/"]
+
+#Workdir es como un "cd" dentro del container
+WORKDIR /usr/src
+
+#Instala las dependencias de nuestro proyecto
+RUN npm install
+
+#Copia el resto del proyecto dentro del container
+COPY [".", "/usr/src/"]
+
+#Para exponer el puerto 3000 del contenedor
+EXPOSE 3000
+
+#Inicia el proyecto y da vida al container
+CMD ["node", "index.js"]
